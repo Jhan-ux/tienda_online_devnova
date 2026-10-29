@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/config.php';
-include __DIR__ . '/includes/header.php';
+require_once __DIR__.'/config.php';
+include __DIR__.'/includes/header.php';
 ?>
 
 <main id="mainContent">
@@ -317,7 +317,7 @@ include __DIR__ . '/includes/header.php';
   <!-- ==========================================================================
        COTIZADOR INTERACTIVO (HERRAMIENTA CLAVE DE CONVERSIÓN)
        ========================================================================== -->
-  <?php include __DIR__ . '/includes/cotizador.php'; ?>
+  <?php include __DIR__.'/includes/cotizador.php'; ?>
 
   <!-- ==========================================================================
        STACK TECNOLÓGICO DE CLASE MUNDIAL
@@ -859,4 +859,4 @@ include __DIR__ . '/includes/header.php';
 
 </main>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<?php include __DIR__.'/includes/footer.php'; ?>

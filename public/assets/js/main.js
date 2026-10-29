@@ -479,4 +479,192 @@ document.addEventListener('DOMContentLoaded', () => {
   setViewMode(currentViewMode);
   const initialHash = window.location.hash.replace('#', '') || window.DEVNOVA_CONFIG?.activeSection || 'hero';
   activateSection(initialHash, false);
+
+  // ==========================================================================
+  // 12. COOKIE CONSENT & PREFERENCES SYSTEM (COOKIES.SYS)
+  // ==========================================================================
+  const cookieBanner = document.getElementById('cookieBanner');
+  const cookiesModal = document.getElementById('cookiesModal');
+  const cookieOptPreferences = document.getElementById('cookieOptPreferences');
+  const cookieOptAnalytics = document.getElementById('cookieOptAnalytics');
+  const cookieModalStatusText = document.getElementById('cookieModalStatusText');
+
+  function getStoredCookieConsent() {
+    try {
+      const stored = localStorage.getItem('devnova_cookie_consent');
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (e) {
+      // JSON parse error or private mode
+    }
+    return null;
+  }
+
+  function initCookieConsent() {
+    const consent = getStoredCookieConsent();
+    const hasDecided = localStorage.getItem('devnova_cookies_accepted');
+
+    if (!hasDecided && cookieBanner) {
+      // Mostrar banner con retraso suave para no interrumpir carga inicial
+      setTimeout(() => {
+        cookieBanner.style.display = 'block';
+      }, 700);
+    }
+
+    if (consent) {
+      if (cookieOptPreferences) cookieOptPreferences.checked = consent.preferences !== false;
+      if (cookieOptAnalytics) cookieOptAnalytics.checked = consent.analytics !== false;
+      if (cookieModalStatusText) {
+        cookieModalStatusText.textContent = `ESTADO: CONFIGURADO (${hasDecided === 'all' ? 'TODAS ACTIVAS' : 'SELECCIÓN PERSONALIZADA'})`;
+      }
+    }
+  }
+
+  window.openCookieSettings = function() {
+    if (cookieBanner) cookieBanner.style.display = 'none';
+    if (cookiesModal) {
+      const consent = getStoredCookieConsent();
+      if (consent) {
+        if (cookieOptPreferences) cookieOptPreferences.checked = consent.preferences !== false;
+        if (cookieOptAnalytics) cookieOptAnalytics.checked = consent.analytics !== false;
+      }
+      cookiesModal.classList.add('open');
+      if (typeof playRetroClick === 'function') playRetroClick(800);
+    }
+  };
+
+  window.closeCookieSettings = function() {
+    if (cookiesModal) {
+      cookiesModal.classList.remove('open');
+      if (typeof playRetroClick === 'function') playRetroClick(600);
+    }
+  };
+
+  window.saveCookiePreferences = function(acceptAll = true) {
+    const consentData = {
+      essential: true,
+      preferences: acceptAll,
+      analytics: acceptAll,
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      localStorage.setItem('devnova_cookies_accepted', acceptAll ? 'all' : 'essential');
+      localStorage.setItem('devnova_cookie_consent', JSON.stringify(consentData));
+    } catch (e) {}
+
+    if (cookieBanner) cookieBanner.style.display = 'none';
+    if (cookiesModal) cookiesModal.classList.remove('open');
+    if (cookieModalStatusText) {
+      cookieModalStatusText.textContent = acceptAll ? 'ESTADO: TODAS LAS COOKIES ACTIVADAS' : 'ESTADO: SOLO COOKIES ESENCIALES';
+    }
+
+    if (typeof playRetroClick === 'function') playRetroClick(950);
+  };
+
+  window.saveCustomCookiePreferences = function() {
+    const prefsChecked = cookieOptPreferences ? cookieOptPreferences.checked : true;
+    const analyticsChecked = cookieOptAnalytics ? cookieOptAnalytics.checked : false;
+
+    const consentData = {
+      essential: true,
+      preferences: prefsChecked,
+      analytics: analyticsChecked,
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      localStorage.setItem('devnova_cookies_accepted', (prefsChecked && analyticsChecked) ? 'all' : 'custom');
+      localStorage.setItem('devnova_cookie_consent', JSON.stringify(consentData));
+    } catch (e) {}
+
+    if (cookieBanner) cookieBanner.style.display = 'none';
+    if (cookiesModal) cookiesModal.classList.remove('open');
+    if (cookieModalStatusText) {
+      cookieModalStatusText.textContent = 'ESTADO: PREFERENCIAS PERSONALIZADAS GUARDADAS';
+    }
+
+    if (typeof playRetroClick === 'function') playRetroClick(900);
+  };
+
+  // Banner button listeners
+  const btnCookieAcceptAll = document.getElementById('btnCookieAcceptAll');
+  if (btnCookieAcceptAll) {
+    btnCookieAcceptAll.addEventListener('click', () => window.saveCookiePreferences(true));
+  }
+
+  const btnCookieReject = document.getElementById('btnCookieReject');
+  if (btnCookieReject) {
+    btnCookieReject.addEventListener('click', () => window.saveCookiePreferences(false));
+  }
+
+  const btnCloseCookieBanner = document.getElementById('btnCloseCookieBanner');
+  if (btnCloseCookieBanner) {
+    btnCloseCookieBanner.addEventListener('click', () => window.saveCookiePreferences(false));
+  }
+
+  // ==========================================================================
+  // 13. TERMS AND CONDITIONS MODAL (TERMINOS_Y_CONDICIONES.TXT)
+  // ==========================================================================
+  const termsModal = document.getElementById('termsModal');
+
+  window.openTermsModal = function() {
+    if (termsModal) {
+      termsModal.classList.add('open');
+      if (typeof playRetroClick === 'function') playRetroClick(850);
+    } else {
+      window.location.href = '/terminos';
+    }
+  };
+
+  window.closeTermsModal = function() {
+    if (termsModal) {
+      termsModal.classList.remove('open');
+      if (typeof playRetroClick === 'function') playRetroClick(600);
+    }
+  };
+
+  // Close modals on overlay backdrop click
+  [termsModal, cookiesModal].forEach(modal => {
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('open');
+          if (typeof playRetroClick === 'function') playRetroClick(600);
+        }
+      });
+    }
+  });
+
+  // Close modals on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (termsModal && termsModal.classList.contains('open')) {
+        window.closeTermsModal();
+      }
+      if (cookiesModal && cookiesModal.classList.contains('open')) {
+        window.closeCookieSettings();
+      }
+    }
+  });
+
+  // Global triggers for terms and cookies
+  document.addEventListener('click', (e) => {
+    const termsTrigger = e.target.closest('.terms-link-trigger, .terms-modal-trigger, a[href="#terminos"]');
+    if (termsTrigger) {
+      e.preventDefault();
+      window.openTermsModal();
+      return;
+    }
+
+    const cookiesTrigger = e.target.closest('.cookies-link-trigger, .cookies-modal-trigger, a[href="#cookies"]');
+    if (cookiesTrigger) {
+      e.preventDefault();
+      window.openCookieSettings();
+      return;
+    }
+  });
+
+  initCookieConsent();
 });

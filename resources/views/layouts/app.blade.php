@@ -61,6 +61,15 @@
   <!-- MODAL DE CONFIRMACIÓN DE COTIZACIÓN -->
   @include('partials.modal-quote')
 
+  <!-- MODAL DE TÉRMINOS Y CONDICIONES (BLOC DE NOTAS) -->
+  @include('partials.modal-terms')
+
+  <!-- MODAL DE CONFIGURACIÓN DE COOKIES (PANEL DE CONTROL) -->
+  @include('partials.modal-cookies')
+
+  <!-- BANNER FLOTANTE DE CONSENTIMIENTO DE COOKIES -->
+  @include('partials.cookie-banner')
+
   <!-- Scripts JavaScript -->
   <script src="{{ asset('assets/js/cotizador.js') }}"></script>
   <script src="{{ asset('assets/js/main.js') }}"></script>

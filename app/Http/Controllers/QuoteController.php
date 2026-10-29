@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Quote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class QuoteController extends Controller
 {
@@ -51,9 +52,25 @@ class QuoteController extends Controller
         return view('welcome', ['activeSection' => 'faqs']);
     }
 
-    public function contact()
+    public function contact(): View
     {
         return view('welcome', ['activeSection' => 'contacto']);
+    }
+
+    /**
+     * Vista dedicada de Términos y Condiciones
+     */
+    public function terms(): View
+    {
+        return view('terms', ['activeSection' => 'terminos']);
+    }
+
+    /**
+     * Vista dedicada de Política de Cookies
+     */
+    public function cookiesPolicy(): View
+    {
+        return view('cookies-policy', ['activeSection' => 'cookies']);
     }
 
     /**
@@ -78,7 +95,7 @@ class QuoteController extends Controller
             'isDirectMessage' => 'nullable|boolean',
         ]);
 
-        $quoteCode = 'DN-' . strtoupper(Str::random(6));
+        $quoteCode = 'DN-'.strtoupper(Str::random(6));
 
         $quote = Quote::create([
             'quote_code' => $quoteCode,
@@ -101,7 +118,7 @@ class QuoteController extends Controller
             'success' => true,
             'quote_id' => $quote->quote_code,
             'message' => 'Cotización registrada correctamente en la base de datos.',
-            'quote' => $quote
+            'quote' => $quote,
         ]);
     }
 
@@ -111,9 +128,10 @@ class QuoteController extends Controller
     public function listQuotes()
     {
         $quotes = Quote::latest()->get();
+
         return response()->json([
             'total' => $quotes->count(),
-            'quotes' => $quotes
+            'quotes' => $quotes,
         ]);
     }
 }

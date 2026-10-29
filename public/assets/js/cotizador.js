@@ -394,6 +394,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Envío por WhatsApp
     if (btnWhatsApp) {
       btnWhatsApp.addEventListener('click', (e) => {
+        const acceptTerms = document.getElementById('acceptTermsQuote');
+        if (acceptTerms && !acceptTerms.checked) {
+          alert('Por favor marca la casilla aceptando los Términos y Condiciones y la Política de Cookies para continuar.');
+          acceptTerms.focus();
+          return;
+        }
+
         const calc = calculateTotal();
         const waMsg = buildWhatsAppMessage(calc);
         const waUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${waMsg}`;
@@ -405,6 +412,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnSaveQuote) {
       btnSaveQuote.addEventListener('click', async (e) => {
         e.preventDefault();
+
+        const acceptTerms = document.getElementById('acceptTermsQuote');
+        if (acceptTerms && !acceptTerms.checked) {
+          alert('Por favor marca la casilla aceptando los Términos y Condiciones y la Política de Cookies para continuar.');
+          acceptTerms.focus();
+          return;
+        }
+
         const calc = calculateTotal();
 
         // Validar que al menos haya puesto nombre o contacto

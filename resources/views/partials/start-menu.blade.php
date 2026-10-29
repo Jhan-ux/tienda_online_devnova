@@ -79,6 +79,28 @@
 
     <div class="start-menu-divider"></div>
 
+    <div class="start-menu-item terms-link-trigger" onclick="window.openTermsModal();">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+      </svg>
+      <span>Términos del Servicio (LEEME.TXT)</span>
+    </div>
+
+    <div class="start-menu-item cookies-link-trigger" onclick="window.openCookieSettings();">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 2a14.5 14.5 0 0 0 0 20 10 10 0 1 0-10-10"></path>
+        <circle cx="8.5" cy="8.5" r="1" fill="currentColor"></circle>
+        <circle cx="15.5" cy="15.5" r="1" fill="currentColor"></circle>
+      </svg>
+      <span>Configuración de Cookies...</span>
+    </div>
+
+    <div class="start-menu-divider"></div>
+
     <div class="start-menu-item" onclick="window.location.reload();">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <polyline points="23 4 23 10 17 10"></polyline>

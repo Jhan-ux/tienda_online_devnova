@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configuración general del sitio web
  * DevNova Studios - Soluciones de Software a Medida
@@ -26,5 +27,5 @@ $social_links = [
     'github' => 'https://github.com',
     'linkedin' => 'https://linkedin.com',
     'twitter' => 'https://twitter.com',
-    'instagram' => 'https://instagram.com'
+    'instagram' => 'https://instagram.com',
 ];

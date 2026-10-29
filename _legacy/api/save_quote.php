@@ -1,25 +1,25 @@
 <?php
+
 /**
  * API Endpoint: Guardar y procesar cotizaciones y solicitudes de contacto
  * DevNova Software Studios
  */
-
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../config.php';
+require_once __DIR__.'/../config.php';
 
 // Leer datos enviados por JSON
 $rawInput = file_get_contents('php://input');
 $data = json_decode($rawInput, true);
 
-if (!$data) {
+if (! $data) {
     echo json_encode([
         'success' => false,
-        'message' => 'No se recibieron datos válidos.'
+        'message' => 'No se recibieron datos válidos.',
     ]);
     exit;
 }
 
-$quoteId = 'DN-' . strtoupper(substr(md5(uniqid(rand(), true)), 0, 6));
+$quoteId = 'DN-'.strtoupper(substr(md5(uniqid(rand(), true)), 0, 6));
 $timestamp = date('Y-m-d H:i:s');
 
 // Estructurar el registro
@@ -39,17 +39,17 @@ $record = [
         'name' => htmlspecialchars($data['client']['name'] ?? 'Anónimo'),
         'email' => htmlspecialchars($data['client']['email'] ?? ''),
         'phone' => htmlspecialchars($data['client']['phone'] ?? ''),
-        'notes' => htmlspecialchars($data['client']['notes'] ?? '')
-    ]
+        'notes' => htmlspecialchars($data['client']['notes'] ?? ''),
+    ],
 ];
 
 // Almacenar en archivo JSON local de respaldo en data/quotes.json
-$storageDir = __DIR__ . '/../data';
-if (!is_dir($storageDir)) {
+$storageDir = __DIR__.'/../data';
+if (! is_dir($storageDir)) {
     mkdir($storageDir, 0755, true);
 }
 
-$storageFile = $storageDir . '/quotes.json';
+$storageFile = $storageDir.'/quotes.json';
 $existingQuotes = [];
 
 if (file_exists($storageFile)) {
@@ -67,11 +67,11 @@ if ($saved !== false) {
     echo json_encode([
         'success' => true,
         'quote_id' => $quoteId,
-        'message' => 'Cotización registrada correctamente.'
+        'message' => 'Cotización registrada correctamente.',
     ]);
 } else {
     echo json_encode([
         'success' => false,
-        'message' => 'Error al escribir el archivo de almacenamiento.'
+        'message' => 'Error al escribir el archivo de almacenamiento.',
     ]);
 }

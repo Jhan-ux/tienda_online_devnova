@@ -521,6 +521,14 @@
               </div>
             </div>
 
+            <!-- Aviso y Aceptación de Términos y Cookies -->
+            <div class="terms-acceptance-notice" style="font-size: 0.74rem; color: #4b5563; font-family: var(--font-mono); display: flex; align-items: flex-start; gap: 8px; margin-top: 8px; padding: 7px 10px; background: #ffffff; border: 1px solid #cbd5e1;">
+              <input type="checkbox" id="acceptTermsQuote" checked style="accent-color: #000080; cursor: pointer; margin-top: 2px;">
+              <label for="acceptTermsQuote" style="cursor: pointer; margin: 0; line-height: 1.4;">
+                Acepto los <a href="#terminos" class="terms-link-trigger" onclick="window.openTermsModal(); return false;" style="color: #000080; font-weight: 700; text-decoration: underline;">Términos y Condiciones</a> y la <a href="#cookies" class="cookies-link-trigger" onclick="window.openCookieSettings(); return false;" style="color: #000080; font-weight: 700; text-decoration: underline;">Política de Cookies</a> de DevNova Studios al generar esta cotización.
+              </label>
+            </div>
+
             <!-- Botones de Acción Final del Paso 5 -->
             <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
               <button type="button" class="win-btn btn-sidebar-whatsapp" id="btnSendWhatsApp" style="padding: 10px; font-size: 0.88rem;">

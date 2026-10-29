@@ -1,0 +1,97 @@
+/* ==========================================================================
+   DEVNOVA STUDIOS - RETRO 95 ANIMATIONS & MICRO-EFFECTS
+   ========================================================================== */
+
+/* Blinking Terminal Cursor */
+@keyframes blinkCursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blinkCursor 1s step-end infinite;
+}
+
+/* Status Indicator Pulse (Live Services) */
+@keyframes statusPing {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.status-ping-dot {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+  border-radius: 50% !important;
+  background-color: #22c55e;
+}
+
+.status-ping-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50% !important;
+  background-color: #22c55e;
+  animation: statusPing 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Window Pop-in (Retro Dialog Animation) */
+@keyframes windowPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.win-animated-pop {
+  animation: windowPop 120ms ease-out forwards;
+}
+
+/* Step transition fade in */
+@keyframes fadeInStep {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-pane.active {
+  animation: fadeInStep 150ms ease-out forwards;
+}
+
+/* Subtle CRT Monitor Scanlines Sweep */
+@keyframes scanlineAnim {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+/* Scroll reveal utility classes (activated via main.js) */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
